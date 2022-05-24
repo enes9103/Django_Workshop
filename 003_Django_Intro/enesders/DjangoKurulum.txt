@@ -1,0 +1,36 @@
+1- python --version (python yüklü mü kontrol et)
+2- python -m venv env (enviroment oluşturmak için) virtual environment (venv) neden kuruyoruz? bir kutu gibi env oluşturup istediğimiz heryerde kulllanabiliriz.
+3- .\env\Scripts\activate (env yi aktive etmek için Scripts in içine gidip activate yap)
+!!!(Eğer bu aşamada bi hata alırsan "security error" bunu yaz -> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted) 
+ve 3.adımı tekrar uygula
+4- pip install django (djangoyu yükle) -güncelleme çıkarsa güncelle (python -m pip install --upgrade pip)
+pip list yaparak django yüklü mü görebiliriz.
+5- django-admin startproject fscohort . ( projeyi oluştur, fscohort= kendi proje ismin)
+6- python manage.py runserver (server ı çalıştır)
+(deafault olarak 8000 portunda çalışır,başka serverda çalışmak isterseniz kodun sonuna numarayı eklemek yeterli. (örn: python manage.py runserver 8080))
+(Terminalde server dan çıkmak için ctrl+c)
+7- terminalde yazan http://127.0.0.1:8000/ linkine tıkla, tarayıcıda roketi gör :)
+8- python manage.py startapp student ( ilk app i oluştur, student= senin app adın) 
+9- app(student) in altındaki views.py'a vermek istediğin response u yaz.
+	from django.http import HttpResponse
+
+	def home(request):
+    		return HttpResponse('Hello world')
+10-ana dizin(fscohort) altındaki urls.py'a git, import ve url patterns kısmını güncelle:
+	from student.views import home
+
+	urlpatterns = [
+    		path('admin/', admin.site.urls),
+    		path('', home, name='home')
+	]
+11-ana dizindeki (fscohort) settings.py, INSTALLED_APPS kısmına kendi app(student) ismini ekle
+	INSTALLED_APPS = [
+    		'django.contrib.admin',
+    		'django.contrib.auth',
+    		'django.contrib.contenttypes',
+    		'django.contrib.sessions',
+    		'django.contrib.messages',
+    		'django.contrib.staticfiles',
+    		'student',
+	]
+12- python manage.py runserver (tekrardan server ı çalıştır, views.py response olarak yazılan şeyi tarayıcıda görmelisin)
