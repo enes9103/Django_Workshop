@@ -18,6 +18,8 @@ e. python -m pip install --upgrade pip
         (django versiyonunu upgrade etmek istersek kullanabiliriz.)
 f. python manage.py runserver 8080
         (server default olarak 8000 portunda açar ancak 8080 gibi bir port belirterek istediğimiz portta da açmasını sağlayabiliriz.)
+
+# requirements.txt işlemleri
 g. pip freeze > requirements.txt
         (yüklenen paketleri requirements.txt dosyasına atar.)
 h. pip install -r requirements.txt
@@ -42,6 +44,33 @@ h. pip install -r requirements.txt
 
 3. Admin dashboard da yapılan değişiklikleri Database de görmek için ya SQLite açıp proje içindeki SQLite dosyasını seçöiyoruz.
     Yada VSC de SQL Eklentisi ile DB dosyasına sağ tıklayıp DB ile aç diyoruz.
+
+# .env işlemleri
+1. pip install python-decouple  : secret keyleri vs deployettiğimizde paylaşılmaması için bu kodu çalıştırıyoruz ve keylerimizi .env dosyasına taşıyoruz.
+
+2. Bu komuttan sonra yapılacak işlem:
+requirements.txt içine alıyoruz.  pip freeze > requirements.txt
+
+3. Ana dizinde (manage.py olduğu dizin) .env dosyası oluşturuyoruz. Settings'den SECRET_KEY kopyalayıp .env dosyasına yapştırıyoruz. .env dosyasında tırnakları ve boşlukları siliyoruz.
+
+4. from decouple import config : settings dosyasına ekliyoruz. (decouple import ettik)(13 14. satıra olabilir)
+
+5. secret key satırını da SECRET_KEY = config("SECRET_KEY") olarak güncelliyoruz.
+
+# Auth işlemleri
+Authantication işlemleri için proje dosyası urls' path e aşağıdaki kod eklenerek auth işlemleri başlar.
+
+1. path('accounts/', include('django.contrib.auth.urls'))
+2. accounts işlemleri için templates altında registration adında klasör oluşturuyoruz.
+3. registration clasörü altına accounts işlemleri için ihtiyaç duyduğumuz html templates lerini oluşturuyoruz. Örnek : login.html register.html vs.
+4. login.html oluşturup login işlemi yaptıktan sonraredirect yönlendirme için Settings e eklememiz gereken bir kod var.
+        LOGIN_REDIRECT_URL = 'home'   #nereye yönlendirmek istersek bu kod ile yönlendiriyoruz.
+5. auth işlemleri için domaiin yanına /accounts/login/     /password_change/ vs yazılır dolaş
+6. register işlemi için views.py dosyasında;
+        a. from django.contrib.auth.forms import UserCreationForm    (oluşturmak için import sonrasında fonksiyonunu yazıyoruz)
+        b. 
+
+
 
 
 # Seçilen klasörde komutun çalışması için ve terminalde ilgili klasörde başlanması için settings/online services settings/cwd yazıyoruz Terminal>İntegrated alanına ${fileDirname}  ilgili ifade yazıllır.
